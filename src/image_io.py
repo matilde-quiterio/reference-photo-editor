@@ -41,10 +41,26 @@ def adjust_saturation(image_array, factor):
 
     return image_rgb
 
+def adjust_temperature(image_array, value):
+    image_float = image_array.astype(np.float32)
+    image_float[:,:,0] = image_float[:,:,0] + value
+    image_float[:,:,2] = image_float[:,:,2] - value
+    image_float = image_float.clip(0,255)
+    image_int = image_float.astype(np.uint8)
+
+    return image_int
+
 image = "data/target/target.jpg"
 image = load_image(image)
-output_image = adjust_saturation(image, 0.5)
-save_image(output_image, "data/output/saturation1.jpg")
+output_imageneg = adjust_temperature(image, -30)
+output_image = adjust_temperature(image, 0)
+output_imagepos = adjust_temperature(image, 30)
+
+save_image(output_imageneg, "data/output/temperature-.jpg")
+save_image(output_image, "data/output/temperature.jpg")
+save_image(output_imagepos, "data/output/temperature+.jpg")
+
+
 print(image.shape)
 print(output_image.shape)
 print(image[0,0])
