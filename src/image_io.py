@@ -50,18 +50,15 @@ def adjust_temperature(image_array, value):
 
     return image_int
 
-image = "data/target/target.jpg"
-image = load_image(image)
-output_imageneg = adjust_temperature(image, -30)
-output_image = adjust_temperature(image, 0)
-output_imagepos = adjust_temperature(image, 30)
+def apply_basic_edit(image_array, brightness, contrast, saturation, temperature):
+    edited_image = adjust_brightness(image_array, brightness)
+    edited_image = adjust_contrast(edited_image, contrast)
+    edited_image = adjust_saturation(edited_image,saturation)
+    edited_image = adjust_temperature(edited_image, temperature)
 
-save_image(output_imageneg, "data/output/temperature-.jpg")
-save_image(output_image, "data/output/temperature.jpg")
-save_image(output_imagepos, "data/output/temperature+.jpg")
+    save_image(edited_image, "data/output/edit.jpg")
+    return edited_image
 
-
-print(image.shape)
-print(output_image.shape)
-print(image[0,0])
-print(output_image[0,0])
+path = "data/target/target.jpg"
+image = load_image(path)
+apply_basic_edit(image, 15,1.1,0.9,10)
