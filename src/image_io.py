@@ -1,5 +1,7 @@
 from PIL import Image
 import numpy as np
+import cv2
+
 
 def load_image(path):
     pil_image = Image.open(path)  
@@ -29,13 +31,21 @@ def adjust_contrast(image_array, factor):
 
     return image_int
 
+def adjust_saturation(image_array, factor):
+    image_hsv = cv2.cvtColor(image_array, cv2.COLOR_RGB2HSV)
+    image_float = image_hsv.astype(np.float32)
+    image_float[:,:,1] = image_float[:,:,1] * factor
+    image_float = image_float.clip(0,255)
+    image_int = image_float.astype(np.uint8)
+    image_rgb = cv2.cvtColor(image_int, cv2.COLOR_HSV2RGB)
+
+    return image_rgb
+
 image = "data/target/target.jpg"
 image = load_image(image)
-image_contrast_05 = adjust_contrast(image,0.5)
-image_contrast_1 = adjust_contrast(image,1)
-image_contrast_15 = adjust_contrast(image,1.5)
-
-
-save_image(image_contrast_05, "data/output/image_contrast_05.jpg")
-save_image(image_contrast_1, "data/output/image_contrast_1.jpg")
-save_image(image_contrast_15, "data/output/image_contrast_15.jpg")
+output_image = adjust_saturation(image, 0.5)
+save_image(output_image, "data/output/saturation1.jpg")
+print(image.shape)
+print(output_image.shape)
+print(image[0,0])
+print(output_image[0,0])
