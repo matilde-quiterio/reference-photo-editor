@@ -56,9 +56,5 @@ def apply_basic_edit(image_array, brightness, contrast, saturation, temperature)
     edited_image = adjust_saturation(edited_image,saturation)
     edited_image = adjust_temperature(edited_image, temperature)
 
-    save_image(edited_image, "data/output/edit.jpg")
     return edited_image
 
-path = "data/target/target.jpg"
-image = load_image(path)
-apply_basic_edit(image, 15,1.1,0.9,10)

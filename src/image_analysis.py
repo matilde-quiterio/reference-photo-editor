@@ -1,7 +1,5 @@
-from PIL import Image
 import numpy as np
 import cv2
-import image_io as funcs
 
 def analyze_brightness(image_array):
     img_hsv = cv2.cvtColor(image_array, cv2.COLOR_RGB2HSV)
@@ -38,9 +36,3 @@ def analyze_temperature(image_array):
     temp_score = red_mean - blue_mean
     return temp_score
 
-path_tgt = "data/target/target.jpg"
-path_ref = "data/reference/reference.jpg"
-image_target = funcs.load_image(path_tgt)
-image_ref = funcs.load_image(path_ref)
-brightness, contrast, saturation, temperature = estimate_basic_adjustments(image_target,image_ref)
-funcs.apply_basic_edit(image_target, brightness, contrast, saturation, temperature)
