@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-
+import image_io as funcs
 def analyze_brightness(image_array):
     img_hsv = cv2.cvtColor(image_array, cv2.COLOR_RGB2HSV)
     img_hsv_mean = img_hsv[:,:,2].mean()
@@ -85,3 +85,13 @@ def blend_images(original, transferred, strength):
     result = result.astype(np.uint8)
 
     return result
+
+def hybrid_edit(target_image, reference_image, lab_strength):
+    brig, contr, sat, temp = estimate_basic_adjustments(target_image, reference_image)
+    basic_result = funcs.apply_basic_edit(target_image, brig, contr, sat, temp)
+
+    lab_result = color_transfer_lab(target_image, reference_image)
+
+    final_result = blend_images(basic_result, lab_result, lab_strength)
+
+    return final_result
