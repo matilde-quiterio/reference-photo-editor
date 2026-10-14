@@ -2,7 +2,7 @@ import image_analysis as anal
 import image_io as funcs
 
 path_tgt = "data/target/target.jpg"
-path_ref = "data/reference/reference.jpg"
+path_ref = "data/reference/ref3.jpg"
 
 image_target = funcs.load_image(path_tgt)
 image_ref = funcs.load_image(path_ref)
