@@ -72,3 +72,16 @@ def color_transfer_lab(target_image, reference_image):
     target_rgb = cv2.cvtColor(target_lab, cv2.COLOR_LAB2RGB)
 
     return target_rgb
+
+def blend_images(original, transferred, strength):
+    strength = np.clip(strength, 0,1)
+    original = original.astype(np.float32)
+    transferred = transferred.astype(np.float32)
+
+    result = (1 - strength) * original + strength * transferred
+
+    result = result.clip(0,255)
+
+    result = result.astype(np.uint8)
+
+    return result
