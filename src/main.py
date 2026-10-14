@@ -9,5 +9,6 @@ image_ref = funcs.load_image(path_ref)
 
 brightness, contrast, saturation, temperature = anal.estimate_basic_adjustments(image_target,image_ref)
 edited_image = funcs.apply_basic_edit(image_target, brightness, contrast, saturation, temperature)
-
+lab_image = anal.color_transfer_lab(edited_image, image_ref)
 funcs.save_image(edited_image, "data/output/edit.jpg")
+funcs.save_image(lab_image, "data/output/l_transf.jpg")
